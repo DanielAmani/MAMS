@@ -16,27 +16,28 @@ RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 
-#define sensor_A_type 8  // Type of sensor A
-#define sensor_B_type 7  // Type of sensor B
+#define sensor_A_type 8    // Type of sensor A
+#define sensor_B_type 7    // Type of sensor B
 #define sensor_C_type 1    // Type of sensor C
-#define debugmode true    //Serial monitor debug
-#define lowmode false     //Enable low power mode
-#define minutes_low 1    //Minute of low power
+#define debugmode true    // Serial monitor debug
+#define lowmode false    // Enable low power mode
+#define minutes_low 1    // Minute of low power
 
 //Sensor value
-#define SEALEVELPRESSURE_HPA (1013.25)//Change sea level pressure if needed for BME680 and BME280
-#define TEMT6000_TIMES 0.0976 //Change value to calculate percentage light TEMT6000
-#define SOIL_AIR_VALUE 490 //Value for Soil sensor 100% dry
-#define SOIL_WATER_VALUE 197 //Value for Soil sensor 100% wet
+#define SEALEVELPRESSURE_HPA (1013.25)    // Change sea level pressure if needed for BME680 and BME280
+#define TEMT6000_TIMES 0.0976     // Change value to calculate percentage light TEMT6000
+#define SOIL_AIR_VALUE 490     // Value for Soil sensor 100% dry
+#define SOIL_WATER_VALUE 197    // Value for Soil sensor 100% wet
 
 const unsigned long total_delay = 2000;    // Total delay for each loop cycle
 const unsigned long sensor_delay = 100;    // Delay between sensor
 const unsigned long interval = 10000;    // How often to send data to the main unit
+unsigned long last_sent;    // When did we last send?
+bool get_data;    //Check if get data from Main Node
 ```
 Change number on define to change type of sensor. To enable serial monitor value from sensor change `debugmode false` to `debugmode true`. On `this_node = `the number for each node must different.
 
-You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't change to avoid confussion
-
+You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't change to avoid confussion. To enable low power mode change ` lowmode false` to ` lowmode true` and adjust how many minutes that you want arduino on low power. by changing value of `minutes_low`.
 
 #### Reserved Pin for sensors
 - A0 A1 A4 A5
@@ -64,9 +65,11 @@ You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't
 
 #### Type of sensor currently supported
 
+Change the value of `#define sensor_A_type` , `#define sensor_B_type` and `#define sensor_C_type` to the type of sensor that you want to use based on guide table below.
+
 Detail for sensor A
 
-|  No  | Type Sensor  | Pin | Store in |
+|  Num  | Type Sensor  | Pin | Store in |
 | :----: |:---------------:|:-----:|:-----|
 | 1 | Raw Digital | D2 | Raw Value: `update.S_A[1]` |
 | 2 | Raw Analog | A0 | Raw Value: `update.S_A[1]` |
@@ -79,7 +82,7 @@ Detail for sensor A
 
 Detail for sensor B
 
-|  No  | Type Sensor  | Pin | Store in |
+|  Num  | Type Sensor  | Pin | Store in |
 | :----: |:---------------:|:-----:|:-----|
 | 1 | Raw Digital | D3 | Raw Value: `update.S_B[1]` |
 | 2 | Raw Analog | A1 | Raw Value: `update.S_B[1]` |
@@ -94,3 +97,11 @@ For option sensor C
 
 - BME 680
 - BME 280
+
+###TODO
+- LoRa
+- Types of low power
+- More sensors support
+- Reduce library based on sensor
+- Better implementation of transfering value
+- Relay, push button and LED control
