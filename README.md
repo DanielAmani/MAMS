@@ -36,33 +36,38 @@ Change number on define to change type of sensor. To enable serial monitor value
 
 
 #### Type of sensor currently supported
-For option sensor A & B
-- 1 Raw Digital
-- 2 Raw Analog
-- 3 DHT 11
-- 4 DHT 22
-- 5 DS18B20
-- 6 HC-SR501 (IR)
-- 7 TEMT6000
-- 8 Capasitive Soil Sensor
+
+
+Detail for sensor A
+
+|  No  | Type Sensor  | Pin | Store in |
+| :----: |:---------------:|:-----:|:-----|
+| 1 | Raw Digital | D2 | Raw Value: `update.S_A[1]` |
+| 2 | Raw Analog | A0 | Raw Value: `update.S_A[1]` |
+| 3 | DHT11 | D2 | Temp: `update.S_A[1]`  Humi: `update.S_A[2]` |
+| 4 | DHT22 | D2 | Temp: `update.S_A[1]`  Humi: `update.S_A[2]` |
+| 5 | DS18B20 | D2 | Temp: `update.S_A[1]` |
+| 6 | HC-SR501 | D2 | Value: `update.S_A[1]`  Bool: `update.ST_A`|
+| 7 | TEMT6000 | A0 | Raw Value: `update.S_A[1]`  Percentage: `update.ST_A`|
+| 7 | Capasitive Soil | A0 | Raw Value: `update.S_A[1]`  Percentage: `update.ST_A`|
+
+Detail for sensor B
+
+|  No  | Type Sensor  | Pin | Store in |
+| :----: |:---------------:|:-----:|:-----|
+| 1 | Raw Digital | D3 | Raw Value: `update.S_B[1]` |
+| 2 | Raw Analog | A1 | Raw Value: `update.S_B[1]` |
+| 3 | DHT11 | D3 | Temp: `update.S_B[1]`  Humi: `update.S_B[2]` |
+| 4 | DHT22 | D3 | Temp: `update.S_B[1]`  Humi: `update.S_B[2]` |
+| 5 | DS18B20 | D3| Temp: `update.S_B[1]` |
+| 6 | HC-SR501 | D3| Value: `update.S_B[1]`  Bool: `update.ST_B`|
+| 7 | TEMT6000 | A1| Raw Value: `update.S_B[1]`  Percentage: `update.ST_B`|
+| 7 | Capasitive Soil | A1| Raw Value: `update.S_B[1]`  Percentage: `update.ST_B`
 
 For option sensor C
 
 - BME 680
 - BME 280
-
-Detail for sensor A
-
-|  No  | Type Sensor  | Pin | Store in |
-| :----: |:---------------:|:-----:|:-----:|
-| 1 | Raw Digital | D2 | Raw Value: `update.S_A[1]` |
-| 2 | Raw Analog | A0 | Raw Value: `update.S_A[1]` |
-| 3 | DHT11 | D2 | Temp: `update.S_A[1]` Humi: `update.S_A[2]` |
-| 4 | DHT22 | D2 | Temp: `update.S_A[1]` Humi: `update.S_A[2]` |
-| 5 | DS18B20 | D2 | Temp: `update.S_A[1]` |
-| 6 | HC-SR501 | D2 | Value: `update.S_A[1]` Bool: `update.ST_A`|
-| 7 | TEMT6000 | A0 | Raw Value: `update.S_A[1]` Percentage: `update.ST_A`|
-| 7 | Capasitive Soil | A0 | Raw Value: `update.S_A[1]` Percentage: `update.ST_A`|
 
 
 #### Reserved Pin for sensors
