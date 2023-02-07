@@ -4,6 +4,8 @@
 
 MAMS is a easier way to implement multiple type sensor to communicate with NRF24 and LoRa. The main function is for agriculture management and data collection system.
 
+Why? Because I am lazy to make different code for each sensor so by combine it to one main code can reduce the different intergation of sensor.
+
 ### How to use it
 
 ------------
@@ -31,12 +33,36 @@ const unsigned long total_delay = 2000;    // Total delay for each loop cycle
 const unsigned long sensor_delay = 100;    // Delay between sensor
 const unsigned long interval = 10000;    // How often to send data to the main unit
 ```
-Change number on define to change type of sensor. To enable serial monitor value from sensor change ```debugmode false``` to ```debugmode true```. On ```this_node = ```the number for each node must different.
+Change number on define to change type of sensor. To enable serial monitor value from sensor change `debugmode false` to `debugmode true`. On `this_node = `the number for each node must different.
+
+You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't change to avoid confussion
 
 
+#### Reserved Pin for sensors
+- A0 A1 A4 A5
+- D2 D3 D4 D5
+
+#### Reserved Pin for NRF24
+ This pin is tested on Arduino Nano
+- CSN D9
+- CSN D10
+- MOSI D11
+- MISO D12
+- SCK D13
+
+#### List of library being used
+- LowPower
+- RF24Network
+- RF24
+- SPI
+- DHT
+- OneWire
+- DallasTemperature
+- Adafruit_Sensor
+- Adafruit_BME680
+- Adafruit_BME280
 
 #### Type of sensor currently supported
-
 
 Detail for sensor A
 
@@ -68,20 +94,3 @@ For option sensor C
 
 - BME 680
 - BME 280
-
-
-#### Reserved Pin for sensors
-- A0 A1 A4 A5
-- D2 D3 D4 D5
-
-#### Reserved Pin for NRF24
- This pin is tested on Arduino Nano
-- CSN D9
-- CSN D10
-- MOSI D11
-- MISO D12
-- SCK D13
-
-
-
-
