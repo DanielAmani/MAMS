@@ -4,6 +4,21 @@
 
 MAMS is a easier way to implement multiple type sensor to communicate with NRF24 and LoRa. The main function is for agriculture management and data collection system.
 
+### How to use it
+
+------------
+
+```C
+const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
+const uint16_t master00 = 00;    // Address of the other node in Octal format
+#define sensor_A_type 5    //Type of sensor A
+#define sensor_B_type 0    //Type of sensor B
+#define sensor_C_type 1   //Type of sensor C
+#define debugmode false    //Debug serial monitor data
+```
+Change number on define to change type of sensor. To enable serial monitor value from sensor change ```debugmode false``` to ```debugmode true```. On ```this_node = ```the number for each node must different.
+
+
 #### Type of sensor currently supported
 For option sensor A & B
 - DHT 11
@@ -30,3 +45,7 @@ For option sensor C
 - MOSI D11
 - MISO D12
 - SCK D13
+
+
+
+
