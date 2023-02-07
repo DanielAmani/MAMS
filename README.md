@@ -21,13 +21,14 @@ Change number on define to change type of sensor. To enable serial monitor value
 
 #### Type of sensor currently supported
 For option sensor A & B
-- DHT 11
-- DHT 22
-- DS18B20
-- HC-SR501 (IR)
-- TEMT6000
-- Raw Analog
-- Raw Digital
+- 1 Raw Digital
+- 2 Raw Analog
+- 3 DHT 11
+- 4 DHT 22
+- 5 DS18B20
+- 6 HC-SR501 (IR)
+- 7 TEMT6000
+- 8 Capasitive Soil Sensor
 
 For option sensor C
 
