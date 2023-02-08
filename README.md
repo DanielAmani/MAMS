@@ -31,13 +31,17 @@ const uint16_t master00 = 00;    // Address of the other node in Octal format
 
 const unsigned long total_delay = 2000;    // Total delay for each loop cycle
 const unsigned long sensor_delay = 100;    // Delay between sensor
-const unsigned long interval = 10000;    // How often to send data to the main unit
+const unsigned long interval_send = 10000;    // How often to send data to the main unit
 unsigned long last_sent;    // When did we last send?
 bool get_data;    //Check if get data from Main Node
 ```
 Change number on define to change type of sensor. To enable serial monitor value from sensor change `debugmode false` to `debugmode true`. On `this_node = `the number for each node must different.
 
-You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't change to avoid confussion. To enable low power mode change ` lowmode false` to ` lowmode true` and adjust how many minutes that you want arduino on low power. by changing value of `minutes_low`.
+You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't change to avoid confussion. To enable low power mode change `lowmode false` to `lowmode true` and adjust how many minutes that you want arduino on low power. by changing value of `minutes_low`.
+
+For `total_delay` meaning delay for each time it complete main loop while `sensor_delay` is delay for each sensor reading. `interval_send` is for interval NRF24 to send data to main node.
+
+Under `//Sensor value` you can change Define value for some type of sensor for accuracy. Example for soil moisture sensor you neeed calibrate the 'Dry' and 'Wet' value to ensure you get good result.
 
 #### Reserved Pin for sensors
 - A0 A1 A4 A5
