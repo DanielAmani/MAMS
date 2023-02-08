@@ -67,7 +67,7 @@ You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't
 
 Change the value of `#define sensor_A_type` , `#define sensor_B_type` and `#define sensor_C_type` to the type of sensor that you want to use based on guide table below.
 
-Detail for sensor A
+Detail for sensor A 
 
 |  Num  | Type Sensor  | Pin | Store in |
 | :----: |:---------------:|:-----:|:-----|
@@ -93,7 +93,12 @@ Detail for sensor B
 | 7 | TEMT6000 | A1| Raw Value: `update.S_B[1]`  Percentage: `update.ST_B`|
 | 7 | Capasitive Soil | A1| Raw Value: `update.S_B[1]`  Percentage: `update.ST_B`
 
-For option sensor C
+For option sensor S (Special)
+
+|  Num  | Type Sensor  | Pin | Type | Store in |
+| :----: |:---------:|:--------------:|:-----:|:-----|
+| 1 | BME680 | SCL->A5 SDA->A4 | i2C |Raw Value: `update.S_S[1]` |
+| 2 | BME280 | SCL->A5 SDA->A4 | i2C |Raw Value: `update.S_S[1]` |
 
 - BME 680
 - BME 280
