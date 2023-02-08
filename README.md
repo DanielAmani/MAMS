@@ -41,7 +41,7 @@ You also can change NRF24 CE and CSN pin on `RF24 radio(10, 9)` but better don't
 
 For `total_delay` meaning delay for each time it complete main loop while `sensor_delay` is delay for each sensor reading. `interval_send` is for interval NRF24 to send data to main node.
 
-Under `//Sensor value` you can change Define value for some type of sensor for accuracy. Example for soil moisture sensor you neeed calibrate the 'Dry' and 'Wet' value to ensure you get good result.
+Under `//Sensor value` you can change Define value for some type of sensor for accuracy. Example for soil moisture sensor you need calibrate the 'Dry' and 'Wet' value to ensure you get good result.
 
 #### Reserved Pin for sensors
 - A0 A1 A4 A5
