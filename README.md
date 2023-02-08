@@ -69,7 +69,9 @@ Under `//Sensor value` you can change Define value for some type of sensor for a
 
 #### Type of sensor currently supported
 
-Change the value of `#define sensor_A_type` , `#define sensor_B_type` and `#define sensor_C_type` to the type of sensor that you want to use based on guide table below.
+Change the value of `#define sensor_A_type` , `#define sensor_B_type` and `#define sensor_S_type` to the type of sensor that you want to use based on guide table below.
+
+Example `#define sensor_A_type 3` meaning set sensor A as DHT22. If no sensor selected just change the value to `0`
 
 Detail for sensor A 
 
