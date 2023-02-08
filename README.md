@@ -18,7 +18,7 @@ const uint16_t master00 = 00;    // Address of the other node in Octal format
 
 #define sensor_A_type 8    // Type of sensor A
 #define sensor_B_type 7    // Type of sensor B
-#define sensor_C_type 1    // Type of sensor C
+#define sensor_S_type 1    // Type of sensor S
 #define debugmode true    // Serial monitor debug
 #define lowmode false    // Enable low power mode
 #define minutes_low 1    // Minute of low power
@@ -97,14 +97,13 @@ For option sensor S (Special)
 
 |  Num  | Type Sensor  | Pin | Type | Store in |
 | :----: |:---------:|:--------------:|:-----:|:-----|
-| 1 | BME680 | SCL->A5 SDA->A4 | i2C |Raw Value: `update.S_S[1]` |
-| 2 | BME280 | SCL->A5 SDA->A4 | i2C |Raw Value: `update.S_S[1]` |
+| 1 | BME680 | SCL->A5 SDA->A4 | i2C | Temp: `update.S_S[1]` Humidity: `update.S_S[2]` Pressure: `update.S_S[3]` Altitute: `update.S_S[4]` Gas: `update.S_S[5]` |
+| 2 | BME280 | SCL->A5 SDA->A4 | i2C |  Temp: `update.S_S[1]` Humidity: `update.S_S[2]` Pressure: `update.S_S[3]` Altitute: `update.S_S[4]` |
 
-- BME 680
-- BME 280
 
-###TODO
-- LoRa
+### TODO
+- LoRa Support
+- ESP32 Main Node and LoRa Node
 - Types of low power
 - More sensors support
 - Reduce library based on sensor
