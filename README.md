@@ -109,7 +109,7 @@ For option sensor S (Special)
 - LoRa Support
 - ESP32 Main Node and LoRa Node
 - Types of low power
-- More sensors support
+- More types and quantity sensor support
 - Reduce library based on sensor
 - Better implementation of transfering value
 - Relay, push button and LED control
