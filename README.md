@@ -3,7 +3,7 @@
 
 ## About
 
-MAMS is a easier way to implement multiple type sensor to communicate with NRF24 and LoRa. The main function is for agriculture management and data collection system.
+**M**ultinode  **A**griculture **M**onitoring **S**ystem is a easier way to implement multiple type sensor to communicate with NRF24 and LoRa. The main function is for agriculture management and data collection system.
 
 Why? Because I am lazy to make different code for each sensor so by combine it to one main code can reduce the different intergation of sensor.
 
