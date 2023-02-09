@@ -168,3 +168,4 @@ If NRF24 data problem
 - Reduce library based on sensor
 - Better implementation of transfering value
 - Relay, push button and LED control
+- Mesh network for NRF24 node
