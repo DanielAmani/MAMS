@@ -48,17 +48,43 @@ For `total_delay` meaning delay for each time it complete main loop while `senso
 
 Under `//Sensor value` you can change Define value for some type of sensor for accuracy. Example for soil moisture sensor you need calibrate the 'Dry' and 'Wet' value to ensure you get good result.
 
-#### Reserved Pin for sensors
+To make digital 'ON' and 'OFF' can be transfer within of NRF24 limit transfer, the value `200` meaning **ON/TRUE** while `100` is **OFF/FASLE** . 
+
+#### Reserved Pin for sensors (Node/Child)
+
+This pin is tested on Arduino Nano
+
 - A0 A1 A4 A5
 - D2 D3 D4 D5
 
-#### Reserved Pin for NRF24
+#### Reserved Pin for NRF24 (Node/Child)
+
  This pin is tested on Arduino Nano
+ 
 - CSN D9
 - CSN D10
 - MOSI D11
 - MISO D12
 - SCK D13
+
+#### Reserved Pin for NRF24+LoRa (Main Node/ESP)
+
+NRF
+- CSN GPIO 5 / D1
+- CE GPIO 4 / D2
+- MOSI GPIO 16 / D7
+- MISO GPIO 15 / D6
+- SCK GPIO 14 / D5
+
+LORA
+- SS GPIO 0 / D3
+- RST GPIO 16 / D0
+- DIO1 GPIO 2 / D4
+- MOSI GPIO 16 / D7
+- MISO GPIO 15 / D6
+- SCK GPIO 14 / D5
+
+**Note: ESP32/8266 need address by GPIO in code**
 
 #### List of library being used
 - LowPower
@@ -119,11 +145,17 @@ If NRF24 data problem
 - Use NRF24 module with external antenna
 - Youtube guide from Electronoobs: [https://www.youtube.com/watch?v=Z7_Cy66Vnrc/](https://www.youtube.com/watch?v=Z7_Cy66Vnrc/ "NRF24 Frustration - Radio module doesn't work?")
 
-### Limitation / Problem
+## Limitation / Problem
+
+------------
+
 - Struct not very nice or have problem when transfer data from 32bit module to 8bit module
 - NRF24 have 32 byte limit payload
 
-### TODO
+## TODO
+
+------------
+
 - LoRa Support
 - ESP32 Main Node and LoRa Node
 - Types of low power
