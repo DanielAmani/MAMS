@@ -7,6 +7,10 @@ MAMS is a easier way to implement multiple type sensor to communicate with NRF24
 
 Why? Because I am lazy to make different code for each sensor so by combine it to one main code can reduce the different intergation of sensor.
 
+### Architecture
+By using NRF24 for short distance node and LoRa for long distance
+![alt text](https://github.com/DanielAmani/MAMS/raw/master/img/MAMSV2.png "MAMS Architecture")
+
 ### How to use it
 
 ------------
