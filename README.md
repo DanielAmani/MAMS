@@ -1,5 +1,5 @@
 # MAMS
--The code is not ready yet. Just put here for backup
+-The code is not fully ready yet. Just put here for backup. Only from Child Node to Main Node is done.
 
 ## About
 
