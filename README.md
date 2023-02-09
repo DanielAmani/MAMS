@@ -87,16 +87,25 @@ LORA
 **Note: ESP32/8266 need address by GPIO in code**
 
 #### List of library being used
-- LowPower
-- RF24Network
-- RF24
-- SPI
-- DHT
-- OneWire
-- DallasTemperature
-- Adafruit_Sensor
-- Adafruit_BME680
-- Adafruit_BME280
+- LowPower https://github.com/rocketscream/Low-Power
+- RF24Network https://nrf24.github.io/RF24Network/
+- RF24 https://nrf24.github.io/RF24/
+- SPI (Install by default)
+- DHT https://github.com/adafruit/DHT-sensor-library
+- OneWire https://www.pjrc.com/teensy/td_libs_OneWire.html
+- DallasTemperature https://github.com/milesburton/Arduino-Temperature-Control-Library
+- Adafruit_Sensor https://github.com/adafruit/Adafruit_Sensor
+- Adafruit_BME680 https://github.com/adafruit/Adafruit_BME680
+- Adafruit_BME280 https://github.com/adafruit/Adafruit_BME280_Library
+
+Later
+- RF24Mesh https://nrf24.github.io/RF24Mesh/ for mesh implimentation
+- ESP-DASH https://github.com/ayushsharma82/ESP-DASH for local ESP dashboard (optional)
+- WiFiClientSecure (buit-in ESP) for WiFi security
+- Wifi Manager https://github.com/tzapu/WiFiManager for config wifi without hardcode SSID
+- AsyncTCP https://github.com/dvarrel/AsyncTCP fow webpage implimentation
+- Universal Telegram Bot https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot for Telegram intergation
+- ArduinoJson https://arduinojson.org/?utm_source=meta&utm_medium=library.properties for JSON
 
 #### Type of sensor currently supported
 
