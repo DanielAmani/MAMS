@@ -117,7 +117,7 @@ If NRF24 data problem
 - Add 100µF capacitor on GND and 3.3V pin of NRF24 module
 - Put the NRF24 module away from other module especially from oscillating power supply
 - Use NRF24 module with external antenna
-- Youtube guide from Electronoobs [NRF24 Frustration - Radio module doesn't work?](https://www.youtube.com/watch?v=Z7_Cy66Vnrc/ "link title")
+- Youtube guide from Electronoobs: [https://www.youtube.com/watch?v=Z7_Cy66Vnrc/](https://www.youtube.com/watch?v=Z7_Cy66Vnrc/ "NRF24 Frustration - Radio module doesn't work?")
 
 ### Limitation / Problem
 - Struct not very nice or have problem when transfer data from 32bit module to 8bit module
