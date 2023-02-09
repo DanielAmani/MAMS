@@ -147,14 +147,10 @@ If NRF24 data problem
 
 ## Limitation / Problem
 
-------------
-
 - Struct not very nice or have problem when transfer data from 32bit module to 8bit module
 - NRF24 have 32 byte limit payload
 
 ## TODO
-
-------------
 
 - LoRa Support
 - ESP32 Main Node and LoRa Node
