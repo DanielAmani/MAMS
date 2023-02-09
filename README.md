@@ -9,7 +9,7 @@ Why? Because I am lazy to make different code for each sensor so by combine it t
 
 ### Architecture
 By using NRF24 for short distance node and LoRa for long distance
-![alt text](https://github.com/DanielAmani/MAMS/raw/master/img/MAMSV2.png "MAMS Architecture")
+![alt text](https://raw.githubusercontent.com/DanielAmani/MAMS/main/img/MAMSV2.png "MAMS Architecture")
 
 ### How to use it
 
