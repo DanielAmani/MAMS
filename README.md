@@ -111,6 +111,17 @@ For option sensor S (Special)
 | 1 | BME680 | SCL->A5 SDA->A4 | i2C | Temp: `update.S_S[1]` Humidity: `update.S_S[2]` Pressure: `update.S_S[3]` Altitute: `update.S_S[4]` Gas: `update.S_S[5]` |
 | 2 | BME280 | SCL->A5 SDA->A4 | i2C |  Temp: `update.S_S[1]` Humidity: `update.S_S[2]` Pressure: `update.S_S[3]` Altitute: `update.S_S[4]` |
 
+### Trobleshooting
+
+If NRF24 data problem
+- Add 100µF capacitor on GND and 3.3V pin of NRF24 module
+- Put the NRF24 module away from other module especially from oscillating power supply
+- Use NRF24 module with external antenna
+- Youtube guide from Electronoobs [NRF24 Frustration - Radio module doesn't work?](https://www.youtube.com/watch?v=Z7_Cy66Vnrc/ "link title")
+
+### Limitation / Problem
+- Struct not very nice or have problem when transfer data from 32bit module to 8bit module
+- NRF24 have 32 byte limit payload
 
 ### TODO
 - LoRa Support
