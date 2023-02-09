@@ -46,10 +46,10 @@ RF24Network network(radio); // Include the radio in the network
 const uint16_t this_node = 02; // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00; // Address of the other node in Octal format
 
-#define sensor_A_type 3 // Type of sensor A
-#define sensor_B_type 0 // Type of sensor B
+#define sensor_A_type 8 // Type of sensor A
+#define sensor_B_type 7 // Type of sensor B
 #define sensor_C_type 0 // Type of sensor C
-#define sensor_D_type 1 // Type of sensor D
+#define sensor_D_type 0 // Type of sensor D
 #define sensor_S_type 1 // Type of sensor C
 #define debugmode true // Serial monitor debug
 #define lowmode false // Enable low power mode
@@ -71,23 +71,22 @@ bool get_data; // Check if get data from Main Node
 struct data {
     float S_A[3]; //Max 3 type
     float S_B[3]; //Max 3 type
-    float S_C[3]; //Max 3 type
-    float S_D[3]; //Max 3 type
     float S_S[5]; //Max 5 type
-    bool reed; //reed sensor status for detect if box is open or not
-    int type_sensor[5];
+    int reed; //reed sensor status for detect if box is open or not
+    int type_sensor[3];
 };
 struct data update;
 //Place holder value for from node
+/*
+//Don't know why cannot recived struct from main node so by this time just using array float to control
 struct mcu_main {
     float get_value[4];
     uint16_t node_value;
 };
 struct mcu_main get_new;
+*/
+  float from_main[8];
 
-float new_value[8];
-
-int i;
 //----------Config Pin, Sensor and Library----------//
 #if sensor_A_type == 1
   #define RAW_Dpin_A 2
@@ -168,17 +167,9 @@ void setup() {
     Serial.println(sensor_B_type);
     update.type_sensor[2] = sensor_B_type;
 
-    Serial.print("Sensor C selection : ");
-    Serial.println(sensor_C_type);
-    update.type_sensor[3] = sensor_C_type;
-
-    Serial.print("Sensor D selection : ");
-    Serial.println(sensor_D_type);
-    update.type_sensor[4] = sensor_D_type;
-
     Serial.print("Sensor S selection : ");
     Serial.println(sensor_S_type);
-    update.type_sensor[5] = sensor_S_type;
+    update.type_sensor[3] = sensor_S_type;
 
     #if sensor_A_type == 1
     pinMode(RAW_Dpin_A, INPUT);
@@ -259,14 +250,14 @@ void setup() {
 }
 
 void loop() {
+
     //----------Network NRF24----------//
     network.update();
     //----------Recieved NRF24----------//
     while (network.available()) {
         RF24NetworkHeader header;
-        network.read(header, & new_value, sizeof(new_value));
+        network.read(header, &from_main, sizeof(from_main));
         get_data = true;
-        Serial.println(new_value[1]);
     }
     //----------Sending NRF24----------//
     unsigned long now = millis();
@@ -427,14 +418,18 @@ void loop() {
         Serial.println(update.S_S[i]);
     }
     #endif
+    
     if (get_data == true) {
+      Serial.println("");
         Serial.println("Get data from Main");
         for (int i = 1; i < 9; i++) {
             Serial.print("Value ");
             Serial.print(i);
-            Serial.println(new_value[i]);
+             Serial.print(" = ");
+            Serial.println(from_main[i]);
         }
-        get_data == false;
+        get_data = false;
     }
+
     #endif
 }
