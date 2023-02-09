@@ -77,12 +77,14 @@ NRF
 - SCK GPIO 14 / D5
 
 LORA
-- SS GPIO 0 / D3
+- NSS GPIO 0 / D3
 - RST GPIO 16 / D0
 - DIO1 GPIO 2 / D4
 - MOSI GPIO 16 / D7
 - MISO GPIO 15 / D6
 - SCK GPIO 14 / D5
+- GND (any Ground)
+- 3.3V
 
 **Note: ESP32/8266 need address by GPIO in code**
 
