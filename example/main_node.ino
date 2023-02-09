@@ -1,5 +1,10 @@
-//Code for ESP32/ESP8266 NRF24 Hub
+/*
+Code for ESP32/ESP8266 NRF24 Hub
+By: Daniel Amani 
+Co: LC28
+Github:
 
+*/
 #include <Arduino.h>
 /*
 
@@ -32,6 +37,8 @@ const uint16_t node01 = 01;      // Address of the other node in Octal format
 const uint16_t node02 = 02;
 const uint16_t node03 = 03;
 
+const unsigned long total_delay = 1000; // Total delay for each loop cycle
+
 /*
 Reserved PIN for NRF24
 -CSN GPIO 5 / D1
@@ -41,10 +48,11 @@ Reserved PIN for NRF24
 -SCK GPIO 14 / D5
 */
 struct data {
-  float S_A [3]; //Max 3 type
-  float S_B [3]; //Max 3 type
-  float S_C [5]; //Max 5 type
-  bool reed; //reed sensor status
+    float S_A[3]; //Max 3 type
+    float S_B[3]; //Max 3 type
+    float S_S[5]; //Max 5 type
+    int reed; //reed sensor status for detect if box is open or not
+    int type_sensor[3];
 };
 struct data income;
 struct data node1_v;
@@ -54,14 +62,16 @@ struct data node4_v;
 
 struct data update;
 
+/*
+/Don't know why cannot recived struct from main node so by this time just using array float to control
 struct mcu_main {
-  float get_value[4];
-  bool get_V1,get_V2;
-  uint16_t node_value;
+    float get_value[4];
+    uint16_t node_value;
 };
 struct mcu_main get_new;
+*/
 
-float new_value[8];
+float to_node[8];
 
 void setup() {
   Serial.begin(9600);
@@ -88,17 +98,17 @@ void loop() {
     if (header.from_node == node02) {    // If data comes from Node 012
       node2_v=income;
     }
-  }  
-  Serial.println(node1_v.S_A[1]);
+
+  } 
+  //Testing Send and recived value
+  to_node[1]=100;
+  to_node[7]=1000;
   Serial.println(node2_v.S_A[1]);
-  
-  new_value[1]=200;
 
   RF24NetworkHeader headerMain(node02);   // (Address where the data is going)
-    bool ok = network.write(headerMain, &new_value, sizeof(new_value)); // Send the data  
-    Serial.print("Value to Node: ");
-  Serial.println(new_value[1]);
-  delay(1000);
+    bool ok = network.write(headerMain, &to_node, sizeof(to_node)); // Send the data
+     
+  delay(total_delay);
   // put your main code here, to run repeatedly:
 
 }
