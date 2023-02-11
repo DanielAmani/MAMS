@@ -148,6 +148,13 @@ For option sensor S (Special)
 | 1 | BME680 | SCL->A5 SDA->A4 | i2C | Temp: `update.S_S[1]` Humidity: `update.S_S[2]` Pressure: `update.S_S[3]` Altitute: `update.S_S[4]` Gas: `update.S_S[5]` |
 | 2 | BME280 | SCL->A5 SDA->A4 | i2C |  Temp: `update.S_S[1]` Humidity: `update.S_S[2]` Pressure: `update.S_S[3]` Altitute: `update.S_S[4]` |
 
+### Guide to power up using solar
+
+- Calculation and solar panel guide by AndreasSpiess https://www.youtube.com/watch?v=WdP4nVQX-j0
+- Charging board guide by AndreasSpiess https://www.youtube.com/watch?v=dBx-g1dkdDQ
+- Simple modification for TP4056 charging by AndreasSpiess https://www.youtube.com/watch?v=37kGva3NW8w
+- 
+
 ### Trobleshooting
 
 If NRF24 data problem
