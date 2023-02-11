@@ -5,7 +5,7 @@
 
 **M**ultinode  **A**griculture **M**onitoring **S**ystem (M.A.M.S.) is a easier way to implement multiple type sensor to communicate with NRF24 and LoRa. The main function is for agriculture management and data collection system.
 
-Why? Because I am lazy to make different code for each sensor so by combine it to one main code can reduce the different intergation of sensor.
+Why? Because I am lazy to make different code for each sensor so by combine it to one main code can reduce the different intergation of sensor. By using code blocker function we can reduce the size of code that support multiple type of sensors.
 
 ### Architecture
 By using NRF24 for short distance node and LoRa for long distance
@@ -167,6 +167,7 @@ If NRF24 data problem
 
 - Struct not very nice or have problem when transfer data from 32bit module to 8bit module
 - NRF24 have 32 byte limit payload
+- Mesh network can change their ID make it difficult for two way communication
 
 ## TODO
 
