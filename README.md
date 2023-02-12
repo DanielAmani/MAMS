@@ -156,16 +156,23 @@ For option sensor S (Special)
 
 ### Trobleshooting
 
-If NRF24 data problem
+If NRF24 problem
 - Add 100µF capacitor on GND and 3.3V pin of NRF24 module
 - Put the NRF24 module away from other module especially from oscillating power supply
 - Use NRF24 module with external antenna
 - Youtube guide from Electronoobs: [https://www.youtube.com/watch?v=Z7_Cy66Vnrc/](https://www.youtube.com/watch?v=Z7_Cy66Vnrc/ "NRF24 Frustration - Radio module doesn't work?")
+- Check the transmitter and receiver using correct band and channel
+- Check pin wiring
 
 If NodeMCU/ESP have problem
 - Check the upload port and board type is correct
 - If cannot upload code, disconnect all pin,  restart arduino IDE and change upload port
 - Check if need to enable/connect dip switch/pin to enable upload code
+- Check pin wiring
+
+if LoRa problem
+- Check the transmitter and receiver using correct band and channel
+- Check pin wiring
 
 ## Limitation / Problem
 
