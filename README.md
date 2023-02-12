@@ -177,7 +177,7 @@ if LoRa problem
 
 ## Limitation / Problem
 
-- Struct not very nice or have problem when transfer data from 32bit module to 8bit module
+- Struct not very nice or have problem when transfer data from 32bit module to 8bit module https://stuartsprojects.github.io/2021/01/18/The-Perils-of-Using-Structures.html
 - NRF24 have 32 byte limit payload
 - Mesh network can change their ID make it difficult for two way communication
 - NRF24 is half duplex while LoRa is full duplex
