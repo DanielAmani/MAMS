@@ -92,6 +92,7 @@ LORA
 - LowPower https://github.com/rocketscream/Low-Power
 - RF24Network https://nrf24.github.io/RF24Network/
 - RF24 https://nrf24.github.io/RF24/
+- LoRa https://github.com/sandeepmistry/arduino-LoRa
 - SPI (Install by default)
 - DHT https://github.com/adafruit/DHT-sensor-library
 - OneWire https://www.pjrc.com/teensy/td_libs_OneWire.html
