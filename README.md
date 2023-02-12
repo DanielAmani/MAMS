@@ -153,7 +153,6 @@ For option sensor S (Special)
 - Calculation and solar panel guide by AndreasSpiess https://www.youtube.com/watch?v=WdP4nVQX-j0
 - Charging board guide by AndreasSpiess https://www.youtube.com/watch?v=dBx-g1dkdDQ
 - Simple modification for TP4056 charging by AndreasSpiess https://www.youtube.com/watch?v=37kGva3NW8w
-- 
 
 ### Trobleshooting
 
@@ -163,11 +162,17 @@ If NRF24 data problem
 - Use NRF24 module with external antenna
 - Youtube guide from Electronoobs: [https://www.youtube.com/watch?v=Z7_Cy66Vnrc/](https://www.youtube.com/watch?v=Z7_Cy66Vnrc/ "NRF24 Frustration - Radio module doesn't work?")
 
+If NodeMCU/ESP have problem
+- Check the upload port and board type is correct
+- If cannot upload code, disconnect all pin,  restart arduino IDE and change upload port
+- Check if need to enable/connect dip switch/pin to enable upload code
+
 ## Limitation / Problem
 
 - Struct not very nice or have problem when transfer data from 32bit module to 8bit module
 - NRF24 have 32 byte limit payload
 - Mesh network can change their ID make it difficult for two way communication
+- NRF24 is half duplex while LoRa is full duplex
 
 ## TODO
 
@@ -175,7 +180,6 @@ If NRF24 data problem
 - ESP32 Main Node and LoRa Node
 - Types of low power
 - More types and quantity sensor support
-- Reduce library based on sensor
 - Better implementation of transfering value
 - Relay, analog output, push button and LED control
 - Mesh network for NRF24 node
