@@ -48,9 +48,9 @@ const uint16_t master00 = 00; // Address of the other node in Octal format
 
 #define sensor_A_type 8 // Type of sensor A
 #define sensor_B_type 7 // Type of sensor B
-#define sensor_C_type 0 // Type of sensor C
-#define sensor_D_type 0 // Type of sensor D
-#define sensor_S_type 1 // Type of sensor C
+//#define sensor_C_type 0 // Type of sensor C
+//#define sensor_D_type 0 // Type of sensor D
+#define sensor_S_type 0 // Type of sensor C
 #define debugmode true // Serial monitor debug
 #define lowmode false // Enable low power mode
 #define minutes_low 1 // Minute of low power
@@ -60,6 +60,8 @@ const uint16_t master00 = 00; // Address of the other node in Octal format
 #define TEMT6000_TIMES 0.0976 // Change value to calculate percentage light TEMT6000
 #define SOIL_AIR_VALUE 490 // Value for Soil sensor 100% dry
 #define SOIL_WATER_VALUE 197 // Value for Soil sensor 100% wet
+#define ANALOG_MIN 0
+#define ANALOG_MAX 1023
 
 const unsigned long total_delay = 2000; // Total delay for each loop cycle
 const unsigned long sensor_delay = 100; // Delay between sensor
@@ -69,12 +71,12 @@ bool get_data; // Check if get data from Main Node
 
 //Place holder value for save value
 struct data {
-    float S_A[3]; //Max 3 type
-    float S_B[3]; //Max 3 type
+    float S_A[2]; //Max 2 type
+    float S_B[2]; //Max 2 type
     float S_S[5]; //Max 5 type
-    int reed; //reed sensor status for detect if box is open or not
     int type_sensor[3];
 };
+
 struct data update;
 //Place holder value for from node
 /*
@@ -158,18 +160,22 @@ void setup() {
     radio.begin();
     network.begin(90, this_node); //(channel, node address)
     radio.setDataRate(RF24_2MBPS); //Speed
+    int temp;
 
     Serial.print("Sensor A selection : ");
     Serial.println(sensor_A_type);
-    update.type_sensor[1] = sensor_A_type;
+    temp=sensor_A_type;
+    update.type_sensor[1] = temp;
 
     Serial.print("Sensor B selection : ");
     Serial.println(sensor_B_type);
-    update.type_sensor[2] = sensor_B_type;
+    temp=sensor_B_type;
+    update.type_sensor[2] = temp;
 
     Serial.print("Sensor S selection : ");
     Serial.println(sensor_S_type);
-    update.type_sensor[3] = sensor_S_type;
+    temp=sensor_S_type;
+    update.type_sensor[3] = temp;
 
     #if sensor_A_type == 1
     pinMode(RAW_Dpin_A, INPUT);
@@ -277,6 +283,7 @@ void loop() {
 
     #elif sensor_A_type == 2
     update.S_A[1] = analogRead(RAW_Apin_A);
+    update.S_A[2] = map(update.S_A[1], ANALOG_MIN, ANALOG_MAX, 0, 100);
 
     #elif sensor_A_type == 3 || sensor_A_type == 4
     update.S_A[1] = dht_A.readTemperature();
