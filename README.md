@@ -95,7 +95,7 @@ This module is connected to MQTT and to other node using LoRa
 - Adafruit_Sensor https://github.com/adafruit/Adafruit_Sensor
 - Adafruit_BME680 https://github.com/adafruit/Adafruit_BME680
 - Adafruit_BME280 https://github.com/adafruit/Adafruit_BME280_Library
-- 
+- I2C_Anything https://github.com/nickgammon/I2C_Anything
 
 Later
 - RF24Mesh https://nrf24.github.io/RF24Mesh/ for mesh implimentation
@@ -105,6 +105,8 @@ Later
 - AsyncTCP https://github.com/dvarrel/AsyncTCP fow webpage implimentation
 - Universal Telegram Bot https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot for Telegram intergation
 - ArduinoJson https://arduinojson.org/?utm_source=meta&utm_medium=library.properties for JSON
+- Async MQTT https://github.com/marvinroger/async-mqtt-client/
+- Async https://github.com/me-no-dev/AsyncTCP/
 
 #### Type of sensor currently supported
 
