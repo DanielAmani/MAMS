@@ -22,35 +22,30 @@ Reserved PIN for NRF24
 
 Type of sensor A B C D
 1-Raw Digital D2 D3 | Raw 
-2-Raw Analog A0 A1| Float S_A[1];
+2-Raw Analog A0 A1| Float Percentage
 3-DHT11 Data Pin D2 D3 5V | Temp Humidity
 4-DHT22 Data Pin D2 D3 5V | Temp Humidity
 5-DS18B20 Data Pin D2 D3 5V | Temp
 6-HC-SR501 Data Pin D2 D3 5V | Bool ST_A
 7-TEMT6000 Data Pin A0 A1 5V  | ValueAnalog ValueCalc
-8-Capasitive soil sensor A0 A1 5V | ValueAnalog ValueCalc
 
 Type of sensor S
 1-BME680 SDA A4, SCL A5, 5V i2C | Temp Humidity Pressure Altitute Gas
 2-BME280 SDA A4, SCL A5, 5V i2C | Temp Humidity Pressure Altitte
-
-Type of sensor Analog
-2-Capasitvive Soil Sensor
-4=3-HC-SR501 IR
 
 //Using #if exclude code block before compile base on sensor type selection
 */
 
 RF24 radio(10, 9); // nRF24L01 (CE,CSN)
 RF24Network network(radio); // Include the radio in the network
-const uint16_t this_node = 02; // Address of our node in Octal format ( 04,031, etc)
-const uint16_t master00 = 00; // Address of the other node in Octal format
+const uint8_t this_node = 02; // Address of our node in Octal format ( 04,031, etc)
+const uint8_t master00 = 00; // Address of the other node in Octal format
 
-#define sensor_A_type 8 // Type of sensor A
+#define sensor_A_type 2 // Type of sensor A
 #define sensor_B_type 7 // Type of sensor B
 //#define sensor_C_type 0 // Type of sensor C
 //#define sensor_D_type 0 // Type of sensor D
-#define sensor_S_type 0 // Type of sensor C
+#define sensor_S_type 1 // Type of sensor C
 #define debugmode true // Serial monitor debug
 #define lowmode false // Enable low power mode
 #define minutes_low 1 // Minute of low power
@@ -58,10 +53,12 @@ const uint16_t master00 = 00; // Address of the other node in Octal format
 //Sensor value
 #define SEALEVELPRESSURE_HPA (1013.25) // Change sea level pressure if needed for BME680 and BME280
 #define TEMT6000_TIMES 0.0976 // Change value to calculate percentage light TEMT6000
-#define SOIL_AIR_VALUE 490 // Value for Soil sensor 100% dry
-#define SOIL_WATER_VALUE 197 // Value for Soil sensor 100% wet
-#define ANALOG_MIN 0
-#define ANALOG_MAX 1023
+//#define SOIL_AIR_VALUE 490 // Value for Soil sensor 100% dry
+//#define SOIL_WATER_VALUE 197 // Value for Soil sensor 100% wet
+#define ANALOG_MIN_A 490 // Analog min for percentage calculation Sensor A
+#define ANALOG_MAX_A 197 // Analog max for percentage calculation Sensor A
+#define ANALOG_MIN_B 490 // Analog min for percentage calculation Sensor B
+#define ANALOG_MAX_B 197 // Analog max for percentage calculation Sensor B
 
 const unsigned long total_delay = 2000; // Total delay for each loop cycle
 const unsigned long sensor_delay = 100; // Delay between sensor
@@ -75,6 +72,7 @@ struct data {
     float S_B[2]; //Max 2 type
     float S_S[5]; //Max 5 type
     int type_sensor[3];
+    int stat[4];
 };
 
 struct data update;
@@ -160,45 +158,33 @@ void setup() {
     radio.begin();
     network.begin(90, this_node); //(channel, node address)
     radio.setDataRate(RF24_2MBPS); //Speed
-    int temp;
 
     Serial.print("Sensor A selection : ");
     Serial.println(sensor_A_type);
-    temp=sensor_A_type;
-    update.type_sensor[1] = temp;
 
     Serial.print("Sensor B selection : ");
     Serial.println(sensor_B_type);
-    temp=sensor_B_type;
-    update.type_sensor[2] = temp;
 
     Serial.print("Sensor S selection : ");
     Serial.println(sensor_S_type);
-    temp=sensor_S_type;
-    update.type_sensor[3] = temp;
+
 
     #if sensor_A_type == 1
     pinMode(RAW_Dpin_A, INPUT);
     #elif sensor_A_type == 2
     pinMode(RAW_Apin_A, INPUT);
-    #elif sensor_A_type == 3 || sensor_A_type == 4
+    #elif sensor_A_type == 3 || sensor_A_type == 4 
     dht_A.begin();
     Serial.println("Sensor A Type = DHT");
-
     #elif sensor_A_type == 5
     sensors_A.begin();
     Serial.println("Sensor A Type = DS18B20");
-
     #elif sensor_A_type == 6
     pinMode(PIRpin_A, INPUT);
     Serial.println("Sensor A Type = PIR");
-
     #elif sensor_A_type == 7
     pinMode(TEMT6000pin_A, INPUT);
     Serial.println("Sensor A Type = TEMT6000");
-    #elif sensor_A_type == 8
-    pinMode(SOIL_pin_A, INPUT);
-    Serial.println("Sensor A Type = Capasitive Soil Sensor");
     #endif
 
     #if sensor_B_type == 1
@@ -208,21 +194,15 @@ void setup() {
     #elif sensor_B_type == 3 || sensor_B_type == 4
     dht_B.begin();
     Serial.println("Sensor B Type = DHT");
-
     #elif sensor_B_type == 5
     sensors_B.begin();
     Serial.println("Sensor B Type = DS18B20");
-
     #elif sensor_B_type == 6
     pinMode(PIRpin_B, INPUT);
     Serial.println("Sensor B Type = PIR");
-
     #elif sensor_B_type == 7
     pinMode(TEMT6000pin_B, INPUT);
     Serial.println("Sensor B Type = TEMT6000");
-    #elif sensor_B_type == 8
-    pinMode(SOIL_pin_B, INPUT);
-    Serial.println("Sensor B Type = Capasitive Soil Sensor");
     #endif
 
     #if sensor_S_type == 1
@@ -256,6 +236,7 @@ void setup() {
 }
 
 void loop() {
+  int SA,SB,SS;
 
     //----------Network NRF24----------//
     network.update();
@@ -274,6 +255,8 @@ void loop() {
     }
     //----------Sensor Type A----------//
     #if sensor_A_type == 1
+    SA=100;
+    update.type_sensor[1] = SA;
     update.S_A[1] = digitalRead(RAW_Dpin_A);
     if (update.S_A[1] == HIGH) {
         update.S_A[2] = 200;
@@ -282,19 +265,27 @@ void loop() {
     }
 
     #elif sensor_A_type == 2
+    SA=200;
+    update.type_sensor[1] = SA;
     update.S_A[1] = analogRead(RAW_Apin_A);
-    update.S_A[2] = map(update.S_A[1], ANALOG_MIN, ANALOG_MAX, 0, 100);
+    update.S_A[2] = map(update.S_A[1], ANALOG_MIN_A, ANALOG_MAX_A, 0, 100);
 
     #elif sensor_A_type == 3 || sensor_A_type == 4
+    SA=300;
+    update.type_sensor[1] = SA;
     update.S_A[1] = dht_A.readTemperature();
     update.S_A[2] = dht_A.readHumidity();
 
     #elif sensor_A_type == 5
+    SA=500;
+    update.type_sensor[1] = SA;
     sensors_A.requestTemperatures();
     // Why "byIndex"? You can have more than one IC on the same bus. 0 refers to the first IC on the wire
     update.S_A[1] = sensors_A.getTempCByIndex(0);
 
     #elif sensor_A_type == 6
+    SA=600;
+    update.type_sensor[1] = SA;
     int move_A = digitalRead(PIRpin_A);
     if (move_A == HIGH) {
         update.S_A[1] = 200;
@@ -303,16 +294,12 @@ void loop() {
     }
 
     #elif sensor_A_type == 7
+    SA=700;
+    update.type_sensor[1] = SA;
     int light_read_A = analogRead(TEMT6000pin_A);
     update.S_A[1] = light_read_A;
     float light_A = light_read_A * 0.0976;
     update.S_A[2] = light_A;
-
-    #elif sensor_A_type == 8
-    int soil_value_A = analogRead(SOIL_pin_A);
-    int soil_percent_A = map(soil_value_A, SOIL_AIR_VALUE, SOIL_WATER_VALUE, 0, 100);
-    update.S_A[1] = soil_value_A;
-    update.S_A[2] = soil_percent_A;
     #endif
 
     #if sensor_A_type > 0
@@ -321,6 +308,8 @@ void loop() {
     //----------Sensor Type B----------//
 
     #if sensor_B_type == 1
+    SB=100;
+    update.type_sensor[2] = SB;
     update.S_B[1] = digitalRead(RAW_Dpin_B);
     if (update.S_B[1] == HIGH) {
         update.S_B[2] = 200;
@@ -329,18 +318,27 @@ void loop() {
     }
 
     #elif sensor_B_type == 2
+    SB=200;
+    update.type_sensor[2] = SB;
     update.S_B[1] = analogRead(RAW_Apin_B);
+    update.S_B[2] = map(update.S_B[1], ANALOG_MIN_B, ANALOG_MAX_B, 0, 100);
 
     #elif sensor_B_type == 3 || sensor_B_type == 4
+    SB=300;
+    update.type_sensor[2] = SB;
     update.S_B[1] = dht_B.readTemperature();
     update.S_B[2] = dht_B.readHumidity();
 
     #elif sensor_B_type == 5
+    SB=500;
+    update.type_sensor[2] = SB;
     sensors_B.requestTemperatures();
     // Why "byIndex"? You can have more than one IC on the same bus. 0 refers to the first IC on the wire
     update.S_B[1] = sensors_B.getTempCByIndex(1);
 
     #elif sensor_B_type == 6
+    SB=600;
+    update.type_sensor[2] = SB;
     int move_B = digitalRead(PIRpin_B);
     if (move_B == HIGH) {
         update.S_B[1] = 200;
@@ -349,16 +347,12 @@ void loop() {
     }
 
     #elif sensor_B_type == 7
+    SB=700;
+    update.type_sensor[2] = SB;
     int light_read_B = analogRead(TEMT6000pin_B);
     update.S_B[1] = light_read_B;
     float light_B = light_read_B * 0.0976;
     update.S_B[2] = light_B;
-
-    #elif sensor_B_type == 8
-    int soil_value_B = analogRead(SOIL_pin_B);
-    int soil_percent_B = map(soil_value_B, SOIL_AIR_VALUE, SOIL_WATER_VALUE, 0, 100);
-    update.S_B[1] = soil_value_B;
-    update.S_B[2] = soil_percent_B;
     #endif
 
     #if sensor_B_type > 0
@@ -368,6 +362,8 @@ void loop() {
     //----------Sensor Type S----------//
 
     #if sensor_S_type == 1
+    SS=100;
+    update.type_sensor[3] = SS;
     unsigned long endTime = bme.beginReading();
     if (endTime == 0) {
         Serial.println(F("Failed to begin reading :("));
@@ -383,9 +379,11 @@ void loop() {
     // BME680's measurement time.
     // Obtain measurement results from BME680. Note that this operation isn't
     #elif sensor_S_type == 2
+    SS=200;
+    update.type_sensor[2] = SS;
     update.S_S[1] = bme.readTemperature();
     update.S_S[2] = bme.readHumidity();
-    update.S_S[3] = bme.readPressure() / 100.0 F;
+    update.S_S[3] = bme.readPressure() / 100.0;
     update.S_S[4] = bme.readAltitude(SEALEVELPRESSURE_HPA);
     #endif
 
@@ -398,7 +396,7 @@ void loop() {
     Serial.println(millis());
     #if sensor_A_type > 0
     Serial.println("Sensor A Reading");
-    for (int i = 1; i < 4; i++) {
+    for (int i = 1; i < 3; i++) {
         Serial.print("Value ");
         Serial.print(i);
         Serial.print(" = ");
@@ -408,7 +406,7 @@ void loop() {
     #if sensor_B_type > 0
     Serial.println("");
     Serial.println("Sensor B Reading");
-    for (int i = 1; i < 4; i++) {
+    for (int i = 1; i < 3; i++) {
         Serial.print("Value ");
         Serial.print(i);
         Serial.print(" = ");
