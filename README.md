@@ -1,5 +1,5 @@
 # MAMS
--The code is not fully ready yet. Just put here for backup. Only from Child Node to Main Node is done.
+-The code is not fully ready yet. Just put here for backup. Only from Main-LoRa to MQTT not done yet
 
 ## About
 
