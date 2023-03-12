@@ -5,7 +5,7 @@ Co: LC28
 Github:
 TODO: -Adding OLED Screen
       -Two way communication
-      -Optimize codee
+      -Optimize code
 */
 
 #include <LoRa.h>
