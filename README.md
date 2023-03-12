@@ -187,3 +187,4 @@ if LoRa problem
 - Better implementation of transfering value
 - Relay, analog output, push button and LED control
 - Mesh network for NRF24 node
+- Two way communication (basic from lower tier node done)
