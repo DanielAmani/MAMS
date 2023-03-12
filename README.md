@@ -21,18 +21,20 @@ RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 
-#define sensor_A_type 8    // Type of sensor A
-#define sensor_B_type 7    // Type of sensor B
-#define sensor_S_type 1    // Type of sensor S
-#define debugmode true    // Serial monitor debug
-#define lowmode false    // Enable low power mode
-#define minutes_low 1    // Minute of low power
+#define sensor_A_type 2 // Type of sensor A
+#define sensor_B_type 7 // Type of sensor B
+#define sensor_S_type 1 // Type of sensor C
+#define debugmode true // Serial monitor debug
+#define lowmode false // Enable low power mode
+#define minutes_low 1 // Minute of low power
 
 //Sensor value
-#define SEALEVELPRESSURE_HPA (1013.25)    // Change sea level pressure if needed for BME680 and BME280
-#define TEMT6000_TIMES 0.0976     // Change value to calculate percentage light TEMT6000
-#define SOIL_AIR_VALUE 490     // Value for Soil sensor 100% dry
-#define SOIL_WATER_VALUE 197    // Value for Soil sensor 100% wet
+#define SEALEVELPRESSURE_HPA (1013.25) // Change sea level pressure if needed for BME680 and BME280
+#define TEMT6000_TIMES 0.0976 // Change value to calculate percentage light TEMT6000
+#define ANALOG_MIN_A 490 // Analog min for percentage calculation Sensor A
+#define ANALOG_MAX_A 197 // Analog max for percentage calculation Sensor A
+#define ANALOG_MIN_B 490 // Analog min for percentage calculation Sensor B
+#define ANALOG_MAX_B 197 // Analog max for percentage calculation Sensor B
 
 const unsigned long total_delay = 2000;    // Total delay for each loop cycle
 const unsigned long sensor_delay = 100;    // Delay between sensor
@@ -67,24 +69,17 @@ This pin is tested on Arduino Nano
 - MISO D12
 - SCK D13
 
-#### Reserved Pin for NRF24+LoRa (Main Node/ESP)
+#### Reserved Pin for Twin-Main (NRF24-LoRa)
 
-NRF
-- CSN GPIO 5 / D1
-- CE GPIO 4 / D2
-- MOSI GPIO 16 / D7
-- MISO GPIO 15 / D6
-- SCK GPIO 14 / D5
+Two Arduino is connected via i2c to send data each other
 
-LORA
-- NSS GPIO 0 / D3
-- RST GPIO 16 / D0
-- DIO1 GPIO 2 / D4
-- MOSI GPIO 16 / D7
-- MISO GPIO 15 / D6
-- SCK GPIO 14 / D5
-- GND (any Ground)
-- 3.3V
+Module NRF24
+
+Module LoRa
+
+#### Reserved Pin for Main ESP32/8266 (LoRa)
+
+This module is connected to MQTT and to other node using LoRa
 
 **Note: ESP32/8266 need address by GPIO in code**
 
@@ -100,6 +95,7 @@ LORA
 - Adafruit_Sensor https://github.com/adafruit/Adafruit_Sensor
 - Adafruit_BME680 https://github.com/adafruit/Adafruit_BME680
 - Adafruit_BME280 https://github.com/adafruit/Adafruit_BME280_Library
+- 
 
 Later
 - RF24Mesh https://nrf24.github.io/RF24Mesh/ for mesh implimentation
@@ -127,7 +123,6 @@ Detail for sensor A
 | 5 | DS18B20 | D2 | Temp: `update.S_A[1]` |
 | 6 | HC-SR501 | D2 | Value: `update.S_A[1]`  Bool: `update.ST_A`|
 | 7 | TEMT6000 | A0 | Raw Value: `update.S_A[1]`  Percentage: `update.ST_A`|
-| 7 | Capasitive Soil | A0 | Raw Value: `update.S_A[1]`  Percentage: `update.ST_A`|
 
 Detail for sensor B
 
@@ -140,7 +135,6 @@ Detail for sensor B
 | 5 | DS18B20 | D3| Temp: `update.S_B[1]` |
 | 6 | HC-SR501 | D3| Value: `update.S_B[1]`  Bool: `update.ST_B`|
 | 7 | TEMT6000 | A1| Raw Value: `update.S_B[1]`  Percentage: `update.ST_B`|
-| 7 | Capasitive Soil | A1| Raw Value: `update.S_B[1]`  Percentage: `update.ST_B`
 
 For option sensor S (Special)
 
@@ -174,6 +168,7 @@ If NodeMCU/ESP have problem
 if LoRa problem
 - Check the transmitter and receiver using correct band and channel
 - Check pin wiring
+- Ensure all GND pin is connected to ground (see https://www.eccircuit.com/2021/08/lora-module-sx1278-ra-02-interfacing.html)
 
 ## Limitation / Problem
 
@@ -181,11 +176,10 @@ if LoRa problem
 - NRF24 have 32 byte limit payload
 - Mesh network can change their ID make it difficult for two way communication
 - NRF24 is half duplex while LoRa is full duplex
+- Some overdata is not transfer via i2c main module (need modified library)
 
 ## TODO
-
-- LoRa Support
-- ESP32 Main Node and LoRa Node
+- Telegram & MQTT
 - Types of low power
 - More types and quantity sensor support
 - Better implementation of transfering value
